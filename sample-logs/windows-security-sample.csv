@@ -1,0 +1,14 @@
+timestamp,host,event_id,user,source_ip,process,message
+2026-05-24T08:00:01Z,DC01,4624,jsmith,192.168.56.20,,Successful logon
+2026-05-24T08:01:11Z,DC01,4625,administrator,203.0.113.20,,Failed logon
+2026-05-24T08:01:14Z,DC01,4625,administrator,203.0.113.20,,Failed logon
+2026-05-24T08:01:18Z,DC01,4625,administrator,203.0.113.20,,Failed logon
+2026-05-24T08:01:22Z,DC01,4625,administrator,203.0.113.20,,Failed logon
+2026-05-24T08:01:27Z,DC01,4625,administrator,203.0.113.20,,Failed logon
+2026-05-24T08:02:10Z,DC01,4740,administrator,203.0.113.20,,Account locked out
+2026-05-24T08:04:30Z,DC01,4672,administrator,192.168.56.10,,Special privileges assigned
+2026-05-24T08:05:02Z,DC01,4720,svc_temp,192.168.56.10,,User account created
+2026-05-24T08:05:45Z,DC01,4732,svc_temp,192.168.56.10,,Member added to local group Administrators
+2026-05-24T08:08:12Z,WIN10,4688,jsmith,192.168.56.20,"powershell.exe -enc SQBFAFgA",Suspicious encoded PowerShell
+2026-05-24T08:09:51Z,WIN10,7045,SYSTEM,192.168.56.20,,Service installed
+2026-05-24T08:11:05Z,DC01,1102,administrator,192.168.56.10,,Audit log cleared

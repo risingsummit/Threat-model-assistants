@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Network Intrusion Detection System</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Threat model assistant</p>
+        <h1>Network Intrusion Detection System</h1>
+      </div>
+      <div class="topbar-actions">
+        <button id="loadSample" class="ghost" type="button" title="Load sample traffic">Sample</button>
+        <button id="resetSystem" class="ghost danger" type="button" title="Reset system">Reset</button>
+        <button id="exportReport" class="primary" type="button" title="Export report">Export</button>
+      </div>
+    </header>
+
+    <main class="ids-shell">
+      <section class="hero-panel" aria-label="NIDS overview">
+        <div class="network-map" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+          <i></i>
+        </div>
+        <div class="hero-copy">
+          <p class="eyebrow">Local detection console</p>
+          <h2>Inspect network events, tune rules, and surface suspicious scans, brute force, malware, and data movement.</h2>
+        </div>
+        <div class="metric-strip">
+          <div>
+            <span id="criticalCount">0</span>
+            <small>Critical</small>
+          </div>
+          <div>
+            <span id="alertCount">0</span>
+            <small>Alerts</small>
+          </div>
+          <div>
+            <span id="eventCount">0</span>
+            <small>Events</small>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel intake-panel" aria-labelledby="intake-heading">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Traffic intake</p>
+            <h2 id="intake-heading">Event analyzer</h2>
+          </div>
+          <span id="sourceBadge" class="badge">Manual traffic</span>
+        </div>
+
+        <div class="control-grid">
+          <label>
+            Sensor
+            <select id="sensorProfile">
+              <option value="edge">Edge firewall</option>
+              <option value="core">Core switch</option>
+              <option value="cloud">Cloud VPC</option>
+              <option value="endpoint">Endpoint agent</option>
+            </select>
+          </label>
+          <label>
+            Detection mode
+            <select id="detectionMode">
+              <option value="balanced">Balanced</option>
+              <option value="strict">Strict</option>
+              <option value="monitor">Monitor only</option>
+            </select>
+          </label>
+          <label>
+            Protected subnet
+            <input id="protectedSubnet" type="text" value="10.0.0.0/8">
+          </label>
+          <label>
+            Trusted DNS
+            <input id="trustedDns" type="text" value="8.8.8.8, 1.1.1.1">
+          </label>
+        </div>
+
+        <div class="upload-row">
+          <label class="file-control">
+            Load .log, .csv, or .json
+            <input id="trafficFile" type="file" accept=".log,.txt,.csv,.json,application/json,text/plain">
+          </label>
+          <label>
+            Known malicious IPs
+            <input id="watchlistInput" type="text" value="185.199.110.153, 45.155.205.233">
+          </label>
+        </div>
+
+        <label class="traffic-label">
+          Network events
+          <textarea id="trafficInput" spellcheck="false"></textarea>
+        </label>
+
+        <div class="actions-row">
+          <button id="analyzeTraffic" class="primary" type="button">Analyze traffic</button>
+          <button id="loadBenign" class="secondary" type="button">Benign sample</button>
+          <button id="clearAlerts" class="ghost" type="button">Clear alerts</button>
+        </div>
+      </section>
+
+      <section class="panel verdict-panel" aria-labelledby="verdict-heading">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Detection result</p>
+            <h2 id="verdict-heading">Network posture</h2>
+          </div>
+          <span id="verdictBadge" class="verdict neutral">Idle</span>
+        </div>
+
+        <div class="score-card">
+          <div>
+            <span id="riskScore">0</span>
+            <small>Intrusion score</small>
+          </div>
+          <div class="score-meter" aria-hidden="true">
+            <span id="scoreFill"></span>
+          </div>
+        </div>
+
+        <div id="summaryBox" class="summary-box">Analyze traffic to see likely attacks, affected hosts, and response steps.</div>
+      </section>
+
+      <section class="panel rules-panel" aria-labelledby="rules-heading">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Rule engine</p>
+            <h2 id="rules-heading">Detection rules</h2>
+          </div>
+          <span id="ruleCount" class="badge">0 enabled</span>
+        </div>
+        <div id="ruleList" class="rule-list"></div>
+      </section>
+
+      <section class="panel alerts-panel" aria-labelledby="alerts-heading">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Alerts</p>
+            <h2 id="alerts-heading">Triggered detections</h2>
+          </div>
+          <span id="triggerCount" class="badge">0 triggered</span>
+        </div>
+        <div id="alertStack" class="alert-stack">
+          <div class="empty-state">Rule matches will appear here.</div>
+        </div>
+      </section>
+
+      <section class="panel timeline-panel" aria-labelledby="timeline-heading">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Event timeline</p>
+            <h2 id="timeline-heading">Traffic events</h2>
+          </div>
+          <span id="timelineCount" class="badge">0 events</span>
+        </div>
+        <div id="timelineLog" class="timeline-log"></div>
+      </section>
+    </main>
+
+    <template id="ruleTemplate">
+      <article class="rule-card">
+        <div>
+          <h3></h3>
+          <p></p>
+        </div>
+        <label class="switch">
+          <input type="checkbox">
+          <span></span>
+        </label>
+      </article>
+    </template>
+
+    <template id="alertTemplate">
+      <article class="alert-card">
+        <div>
+          <strong></strong>
+          <span></span>
+        </div>
+        <small></small>
+      </article>
+    </template>
+
+    <script src="app.js"></script>
+  </body>
+</html>

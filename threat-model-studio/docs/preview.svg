@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-label="Threat Model Studio interface preview">
+  <rect width="1280" height="720" fill="#f6f7fb"/>
+  <rect x="42" y="42" width="1196" height="636" rx="18" fill="#ffffff" stroke="#d8dee9"/>
+  <rect x="42" y="42" width="1196" height="88" rx="18" fill="#172033"/>
+  <text x="82" y="92" font-family="Arial, sans-serif" font-size="32" font-weight="700" fill="#ffffff">Threat Model Studio</text>
+  <rect x="82" y="168" width="332" height="454" rx="12" fill="#f8fafc" stroke="#d9e1ec"/>
+  <text x="110" y="210" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#172033">Product Profile</text>
+  <rect x="110" y="242" width="260" height="34" rx="6" fill="#e8eef7"/>
+  <rect x="110" y="296" width="260" height="34" rx="6" fill="#e8eef7"/>
+  <rect x="110" y="350" width="260" height="90" rx="6" fill="#e8eef7"/>
+  <rect x="454" y="168" width="332" height="454" rx="12" fill="#f8fafc" stroke="#d9e1ec"/>
+  <text x="482" y="210" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#172033">Data Flows</text>
+  <circle cx="540" cy="310" r="46" fill="#c7d2fe"/>
+  <circle cx="700" cy="310" r="46" fill="#bae6fd"/>
+  <path d="M590 310h58" stroke="#334155" stroke-width="6" stroke-linecap="round"/>
+  <path d="M640 292l24 18-24 18" fill="none" stroke="#334155" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="826" y="168" width="332" height="454" rx="12" fill="#f8fafc" stroke="#d9e1ec"/>
+  <text x="854" y="210" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#172033">Prioritized Findings</text>
+  <rect x="854" y="246" width="252" height="76" rx="8" fill="#fee2e2"/>
+  <rect x="854" y="342" width="252" height="76" rx="8" fill="#fef3c7"/>
+  <rect x="854" y="438" width="252" height="76" rx="8" fill="#dcfce7"/>
+</svg>

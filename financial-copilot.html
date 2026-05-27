@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AI Financial Copilot</title>
+    <link rel="stylesheet" href="financial-copilot.css">
+  </head>
+  <body>
+    <header class="app-header">
+      <div>
+        <p class="eyebrow">Personal finance workspace</p>
+        <h1>AI Financial Copilot</h1>
+      </div>
+      <div class="header-actions">
+        <button id="loadSample" class="ghost" type="button" title="Load sample profile">Sample</button>
+        <button id="resetPlan" class="ghost danger" type="button" title="Reset profile">Reset</button>
+        <button id="exportPlan" class="primary" type="button" title="Export plan">Export</button>
+      </div>
+    </header>
+
+    <main class="copilot-shell">
+      <section class="hero-panel" aria-label="Financial overview">
+        <div class="market-tile" aria-hidden="true">
+          <canvas id="sparkCanvas" width="360" height="260"></canvas>
+        </div>
+        <div class="hero-copy">
+          <p class="eyebrow">Cash flow command center</p>
+          <h2>Turn income, bills, debt, and goals into a practical monthly plan.</h2>
+        </div>
+        <div class="metric-strip">
+          <div>
+            <span id="monthlySurplus">$0</span>
+            <small>Monthly surplus</small>
+          </div>
+          <div>
+            <span id="runwayMonths">0.0</span>
+            <small>Runway months</small>
+          </div>
+          <div>
+            <span id="planScore">0</span>
+            <small>Plan score</small>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel input-panel" aria-labelledby="profile-heading">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Financial profile</p>
+            <h2 id="profile-heading">Monthly inputs</h2>
+          </div>
+          <span id="profileBadge" class="badge">Manual plan</span>
+        </div>
+
+        <div class="control-grid">
+          <label>
+            Monthly income
+            <input id="income" type="number" min="0" step="50" value="6500">
+          </label>
+          <label>
+            Essential spending
+            <input id="essentials" type="number" min="0" step="25" value="3100">
+          </label>
+          <label>
+            Lifestyle spending
+            <input id="lifestyle" type="number" min="0" step="25" value="1250">
+          </label>
+          <label>
+            Current savings
+            <input id="savings" type="number" min="0" step="100" value="14500">
+          </label>
+          <label>
+            Total debt
+            <input id="debt" type="number" min="0" step="100" value="8200">
+          </label>
+          <label>
+            Debt APR
+            <input id="apr" type="number" min="0" max="99" step="0.1" value="18.9">
+          </label>
+          <label>
+            Goal amount
+            <input id="goal" type="number" min="0" step="100" value="30000">
+          </label>
+          <label>
+            Time horizon
+            <select id="horizon">
+              <option value="6">6 months</option>
+              <option value="12" selected>12 months</option>
+              <option value="24">24 months</option>
+              <option value="36">36 months</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="preference-row">
+          <label>
+            Risk style
+            <select id="riskStyle">
+              <option value="steady">Steady</option>
+              <option value="growth">Growth</option>
+              <option value="defensive">Defensive</option>
+            </select>
+          </label>
+          <label>
+            Priority
+            <select id="priority">
+              <option value="balanced">Balanced</option>
+              <option value="debt">Pay down debt</option>
+              <option value="savings">Build emergency fund</option>
+              <option value="goal">Reach goal faster</option>
+            </select>
+          </label>
+        </div>
+
+        <label class="transaction-label">
+          Recent transactions
+          <textarea id="transactions" spellcheck="false"></textarea>
+        </label>
+
+        <div class="actions-row">
+          <button id="analyzePlan" class="primary" type="button">Analyze plan</button>
+          <button id="addScenario" class="secondary" type="button">Add scenario</button>
+          <button id="clearTransactions" class="ghost" type="button">Clear transactions</button>
+        </div>
+      </section>
+
+      <section class="panel coach-panel" aria-labelledby="coach-heading">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Copilot brief</p>
+            <h2 id="coach-heading">Financial guidance</h2>
+          </div>
+          <span id="healthBadge" class="verdict neutral">Idle</span>
+        </div>
+
+        <div class="score-card">
+          <div>
+            <span id="healthScore">0</span>
+            <small>Financial health</small>
+          </div>
+          <div class="score-meter" aria-hidden="true">
+            <span id="scoreFill"></span>
+          </div>
+        </div>
+
+        <div id="briefBox" class="brief-box">Run the copilot to see budget pressure, next best action, and a monthly allocation plan.</div>
+      </section>
+
+      <section class="panel chart-panel" aria-labelledby="forecast-heading">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Forecast</p>
+            <h2 id="forecast-heading">Savings trajectory</h2>
+          </div>
+          <span id="forecastBadge" class="badge">12 months</span>
+        </div>
+        <div class="chart-wrap">
+          <canvas id="forecastCanvas" width="720" height="360"></canvas>
+        </div>
+      </section>
+
+      <section class="panel allocation-panel" aria-labelledby="allocation-heading">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Monthly moves</p>
+            <h2 id="allocation-heading">Recommended allocation</h2>
+          </div>
+          <span id="allocationTotal" class="badge">$0 assigned</span>
+        </div>
+        <div id="allocationList" class="allocation-list"></div>
+      </section>
+
+      <section class="panel insight-panel" aria-labelledby="insight-heading">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Insights</p>
+            <h2 id="insight-heading">Action plan</h2>
+          </div>
+          <span id="insightCount" class="badge">0 insights</span>
+        </div>
+        <div id="insightStack" class="insight-stack">
+          <div class="empty-state">Recommendations will appear here.</div>
+        </div>
+      </section>
+
+      <section class="panel transaction-panel" aria-labelledby="transaction-heading">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Spending scan</p>
+            <h2 id="transaction-heading">Transaction categories</h2>
+          </div>
+          <span id="transactionCount" class="badge">0 rows</span>
+        </div>
+        <div id="categoryList" class="category-list"></div>
+      </section>
+    </main>
+
+    <template id="allocationTemplate">
+      <article class="allocation-card">
+        <div>
+          <strong></strong>
+          <span></span>
+        </div>
+        <small></small>
+      </article>
+    </template>
+
+    <template id="insightTemplate">
+      <article class="insight-card">
+        <div>
+          <strong></strong>
+          <span></span>
+        </div>
+        <small></small>
+      </article>
+    </template>
+
+    <script src="financial-copilot.js"></script>
+  </body>
+</html>

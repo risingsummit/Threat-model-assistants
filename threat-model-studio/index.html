@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Threat Model Studio</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="app-header">
+      <div>
+        <p class="eyebrow">Security design workspace</p>
+        <h1>Threat Model Studio</h1>
+      </div>
+      <div class="header-actions">
+        <button id="loadSample" class="button secondary" type="button">Load sample</button>
+        <button id="exportMarkdown" class="button primary" type="button">Export markdown</button>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="panel profile-panel" aria-labelledby="profile-heading">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">Project</p>
+            <h2 id="profile-heading">Product profile</h2>
+          </div>
+          <span id="riskBadge" class="badge neutral">Ready</span>
+        </div>
+
+        <label>
+          Product name
+          <input id="projectName" type="text" value="AtlasDocs Collaboration Platform">
+        </label>
+
+        <label>
+          Summary
+          <textarea id="projectSummary" rows="4">A SaaS document-sharing platform for small legal and finance teams.</textarea>
+        </label>
+
+        <div class="form-grid">
+          <label>
+            Deployment
+            <select id="deployment">
+              <option value="internet-facing">Internet-facing</option>
+              <option value="internal">Internal</option>
+              <option value="hybrid">Hybrid</option>
+            </select>
+          </label>
+          <label>
+            Authentication
+            <select id="authModel">
+              <option value="password-mfa">Password + MFA</option>
+              <option value="password-only">Password only</option>
+              <option value="sso">SSO</option>
+              <option value="service-identity">Service identity</option>
+            </select>
+          </label>
+          <label>
+            Data sensitivity
+            <select id="dataSensitivity">
+              <option value="public">Public</option>
+              <option value="internal">Internal</option>
+              <option value="confidential">Confidential</option>
+              <option value="regulated">Regulated</option>
+            </select>
+          </label>
+        </div>
+      </section>
+
+      <section class="score-panel" aria-labelledby="score-heading">
+        <div>
+          <p class="eyebrow">Residual risk</p>
+          <h2 id="score-heading"><span id="riskScore">0</span>/100</h2>
+          <p id="riskSummary">Add assets and data flows to generate a threat model.</p>
+        </div>
+        <div class="score-ring" aria-hidden="true">
+          <span id="scoreNeedle"></span>
+        </div>
+      </section>
+
+      <section class="panel diagram-panel" aria-labelledby="diagram-heading">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">Architecture</p>
+            <h2 id="diagram-heading">Flow map</h2>
+          </div>
+          <span id="flowCount" class="badge">0 flows</span>
+        </div>
+        <div id="flowMap" class="flow-map"></div>
+      </section>
+
+      <section class="panel editor-panel" aria-labelledby="assets-heading">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">Inventory</p>
+            <h2 id="assets-heading">Assets</h2>
+          </div>
+          <button id="addAsset" class="button compact" type="button">Add asset</button>
+        </div>
+        <div id="assetList" class="stack"></div>
+      </section>
+
+      <section class="panel editor-panel" aria-labelledby="flows-heading">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">Paths</p>
+            <h2 id="flows-heading">Data flows</h2>
+          </div>
+          <button id="addFlow" class="button compact" type="button">Add flow</button>
+        </div>
+        <div id="flowList" class="stack"></div>
+      </section>
+
+      <section class="panel findings-panel" aria-labelledby="findings-heading">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">STRIDE</p>
+            <h2 id="findings-heading">Prioritized findings</h2>
+          </div>
+          <span id="findingCount" class="badge">0 findings</span>
+        </div>
+        <div id="findingList" class="findings"></div>
+      </section>
+
+      <section class="panel mitigation-panel" aria-labelledby="mitigation-heading">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">Tracker</p>
+            <h2 id="mitigation-heading">Mitigations</h2>
+          </div>
+          <button id="addMitigation" class="button compact" type="button">Add task</button>
+        </div>
+        <div id="mitigationList" class="stack"></div>
+      </section>
+    </main>
+
+    <dialog id="exportDialog">
+      <form method="dialog">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">Export</p>
+            <h2>Markdown report</h2>
+          </div>
+          <button class="button compact" value="close" type="submit">Close</button>
+        </div>
+        <textarea id="markdownOutput" spellcheck="false"></textarea>
+      </form>
+    </dialog>
+
+    <script src="src/threat-engine.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

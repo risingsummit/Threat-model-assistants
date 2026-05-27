@@ -1,0 +1,4 @@
+2026-05-24T08:12:01Z host=EDGE01 level=info action=allow src=192.168.56.20 dst=192.168.56.10 user=jsmith message="Allowed DNS"
+2026-05-24T08:12:05Z host=EDGE01 level=warning action=deny src=203.0.113.20 dst=192.168.56.10 user=unknown message="Blocked inbound admin traffic"
+2026-05-24T08:12:08Z host=EDGE01 level=warning action=deny src=203.0.113.20 dst=192.168.56.10 user=unknown message="Blocked inbound admin traffic"
+2026-05-24T08:12:14Z host=EDGE01 level=warning action=deny src=203.0.113.20 dst=192.168.56.10 user=unknown message="Blocked inbound admin traffic"

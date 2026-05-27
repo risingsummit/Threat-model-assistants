@@ -1,0 +1,265 @@
+{
+  "generated": "2026-05-24T08:06:49+00:00",
+  "event_count": 17,
+  "findings": [
+    {
+      "rule": "Suspicious command or process",
+      "severity": "Critical",
+      "summary": "1 suspicious command/process event(s) found.",
+      "recommendation": "Inspect the command line, parent process, user context, and endpoint timeline.",
+      "evidence": [
+        {
+          "timestamp": "2026-05-24T08:08:12+00:00",
+          "source_file": "sample-logs\\windows-security-sample.csv",
+          "raw": "{\"timestamp\": \"2026-05-24T08:08:12Z\", \"host\": \"WIN10\", \"event_id\": \"4688\", \"user\": \"jsmith\", \"source_ip\": \"192.168.56.20\", \"process\": \"powershell.exe -enc SQBFAFgA\", \"message\": \"Suspicious encoded PowerShell\"}",
+          "host": "WIN10",
+          "user": "jsmith",
+          "source_ip": "192.168.56.20",
+          "event_id": "4688",
+          "action": "Process creation",
+          "message": "Suspicious encoded PowerShell",
+          "level": "",
+          "process": "powershell.exe -enc SQBFAFgA"
+        }
+      ]
+    },
+    {
+      "rule": "Security log cleared",
+      "severity": "Critical",
+      "summary": "1 log clearing event(s) found.",
+      "recommendation": "Treat unexpected log clearing as high priority and preserve remaining evidence immediately.",
+      "evidence": [
+        {
+          "timestamp": "2026-05-24T08:11:05+00:00",
+          "source_file": "sample-logs\\windows-security-sample.csv",
+          "raw": "{\"timestamp\": \"2026-05-24T08:11:05Z\", \"host\": \"DC01\", \"event_id\": \"1102\", \"user\": \"administrator\", \"source_ip\": \"192.168.56.10\", \"process\": \"\", \"message\": \"Audit log cleared\"}",
+          "host": "DC01",
+          "user": "administrator",
+          "source_ip": "192.168.56.10",
+          "event_id": "1102",
+          "action": "Audit log cleared",
+          "message": "Audit log cleared",
+          "level": "",
+          "process": ""
+        }
+      ]
+    },
+    {
+      "rule": "Repeated failed authentication",
+      "severity": "High",
+      "summary": "5 failed authentication events for administrator from 203.0.113.20.",
+      "recommendation": "Check whether this is password spraying or brute force activity, then reset credentials or block the source if unauthorized.",
+      "evidence": [
+        {
+          "timestamp": "2026-05-24T08:01:11+00:00",
+          "source_file": "sample-logs\\windows-security-sample.csv",
+          "raw": "{\"timestamp\": \"2026-05-24T08:01:11Z\", \"host\": \"DC01\", \"event_id\": \"4625\", \"user\": \"administrator\", \"source_ip\": \"203.0.113.20\", \"process\": \"\", \"message\": \"Failed logon\"}",
+          "host": "DC01",
+          "user": "administrator",
+          "source_ip": "203.0.113.20",
+          "event_id": "4625",
+          "action": "Failed logon",
+          "message": "Failed logon",
+          "level": "",
+          "process": ""
+        },
+        {
+          "timestamp": "2026-05-24T08:01:14+00:00",
+          "source_file": "sample-logs\\windows-security-sample.csv",
+          "raw": "{\"timestamp\": \"2026-05-24T08:01:14Z\", \"host\": \"DC01\", \"event_id\": \"4625\", \"user\": \"administrator\", \"source_ip\": \"203.0.113.20\", \"process\": \"\", \"message\": \"Failed logon\"}",
+          "host": "DC01",
+          "user": "administrator",
+          "source_ip": "203.0.113.20",
+          "event_id": "4625",
+          "action": "Failed logon",
+          "message": "Failed logon",
+          "level": "",
+          "process": ""
+        },
+        {
+          "timestamp": "2026-05-24T08:01:18+00:00",
+          "source_file": "sample-logs\\windows-security-sample.csv",
+          "raw": "{\"timestamp\": \"2026-05-24T08:01:18Z\", \"host\": \"DC01\", \"event_id\": \"4625\", \"user\": \"administrator\", \"source_ip\": \"203.0.113.20\", \"process\": \"\", \"message\": \"Failed logon\"}",
+          "host": "DC01",
+          "user": "administrator",
+          "source_ip": "203.0.113.20",
+          "event_id": "4625",
+          "action": "Failed logon",
+          "message": "Failed logon",
+          "level": "",
+          "process": ""
+        },
+        {
+          "timestamp": "2026-05-24T08:01:22+00:00",
+          "source_file": "sample-logs\\windows-security-sample.csv",
+          "raw": "{\"timestamp\": \"2026-05-24T08:01:22Z\", \"host\": \"DC01\", \"event_id\": \"4625\", \"user\": \"administrator\", \"source_ip\": \"203.0.113.20\", \"process\": \"\", \"message\": \"Failed logon\"}",
+          "host": "DC01",
+          "user": "administrator",
+          "source_ip": "203.0.113.20",
+          "event_id": "4625",
+          "action": "Failed logon",
+          "message": "Failed logon",
+          "level": "",
+          "process": ""
+        },
+        {
+          "timestamp": "2026-05-24T08:01:27+00:00",
+          "source_file": "sample-logs\\windows-security-sample.csv",
+          "raw": "{\"timestamp\": \"2026-05-24T08:01:27Z\", \"host\": \"DC01\", \"event_id\": \"4625\", \"user\": \"administrator\", \"source_ip\": \"203.0.113.20\", \"process\": \"\", \"message\": \"Failed logon\"}",
+          "host": "DC01",
+          "user": "administrator",
+          "source_ip": "203.0.113.20",
+          "event_id": "4625",
+          "action": "Failed logon",
+          "message": "Failed logon",
+          "level": "",
+          "process": ""
+        }
+      ]
+    },
+    {
+      "rule": "Identity or group change",
+      "severity": "High",
+      "summary": "2 user, password, or group membership change event(s) found.",
+      "recommendation": "Validate that each account or group change was approved and performed by the expected administrator.",
+      "evidence": [
+        {
+          "timestamp": "2026-05-24T08:05:02+00:00",
+          "source_file": "sample-logs\\windows-security-sample.csv",
+          "raw": "{\"timestamp\": \"2026-05-24T08:05:02Z\", \"host\": \"DC01\", \"event_id\": \"4720\", \"user\": \"svc_temp\", \"source_ip\": \"192.168.56.10\", \"process\": \"\", \"message\": \"User account created\"}",
+          "host": "DC01",
+          "user": "svc_temp",
+          "source_ip": "192.168.56.10",
+          "event_id": "4720",
+          "action": "User account created",
+          "message": "User account created",
+          "level": "",
+          "process": ""
+        },
+        {
+          "timestamp": "2026-05-24T08:05:45+00:00",
+          "source_file": "sample-logs\\windows-security-sample.csv",
+          "raw": "{\"timestamp\": \"2026-05-24T08:05:45Z\", \"host\": \"DC01\", \"event_id\": \"4732\", \"user\": \"svc_temp\", \"source_ip\": \"192.168.56.10\", \"process\": \"\", \"message\": \"Member added to local group Administrators\"}",
+          "host": "DC01",
+          "user": "svc_temp",
+          "source_ip": "192.168.56.10",
+          "event_id": "4732",
+          "action": "Member added to local group",
+          "message": "Member added to local group Administrators",
+          "level": "",
+          "process": ""
+        }
+      ]
+    },
+    {
+      "rule": "Service installation",
+      "severity": "High",
+      "summary": "1 service installation event(s) found.",
+      "recommendation": "Confirm the service binary path, signer, installer source, and change ticket.",
+      "evidence": [
+        {
+          "timestamp": "2026-05-24T08:09:51+00:00",
+          "source_file": "sample-logs\\windows-security-sample.csv",
+          "raw": "{\"timestamp\": \"2026-05-24T08:09:51Z\", \"host\": \"WIN10\", \"event_id\": \"7045\", \"user\": \"SYSTEM\", \"source_ip\": \"192.168.56.20\", \"process\": \"\", \"message\": \"Service installed\"}",
+          "host": "WIN10",
+          "user": "SYSTEM",
+          "source_ip": "192.168.56.20",
+          "event_id": "7045",
+          "action": "Service installed",
+          "message": "Service installed",
+          "level": "",
+          "process": ""
+        }
+      ]
+    },
+    {
+      "rule": "Account lockout",
+      "severity": "Medium",
+      "summary": "1 account lockout event(s) found.",
+      "recommendation": "Review the locked accounts, source hosts, and recent failed logons.",
+      "evidence": [
+        {
+          "timestamp": "2026-05-24T08:02:10+00:00",
+          "source_file": "sample-logs\\windows-security-sample.csv",
+          "raw": "{\"timestamp\": \"2026-05-24T08:02:10Z\", \"host\": \"DC01\", \"event_id\": \"4740\", \"user\": \"administrator\", \"source_ip\": \"203.0.113.20\", \"process\": \"\", \"message\": \"Account locked out\"}",
+          "host": "DC01",
+          "user": "administrator",
+          "source_ip": "203.0.113.20",
+          "event_id": "4740",
+          "action": "User account locked out",
+          "message": "Account locked out",
+          "level": "",
+          "process": ""
+        }
+      ]
+    },
+    {
+      "rule": "Privileged logon",
+      "severity": "Medium",
+      "summary": "1 privileged logon event(s) found.",
+      "recommendation": "Confirm these privileged sessions match approved administrator activity.",
+      "evidence": [
+        {
+          "timestamp": "2026-05-24T08:04:30+00:00",
+          "source_file": "sample-logs\\windows-security-sample.csv",
+          "raw": "{\"timestamp\": \"2026-05-24T08:04:30Z\", \"host\": \"DC01\", \"event_id\": \"4672\", \"user\": \"administrator\", \"source_ip\": \"192.168.56.10\", \"process\": \"\", \"message\": \"Special privileges assigned\"}",
+          "host": "DC01",
+          "user": "administrator",
+          "source_ip": "192.168.56.10",
+          "event_id": "4672",
+          "action": "Special privileges assigned",
+          "message": "Special privileges assigned",
+          "level": "",
+          "process": ""
+        }
+      ]
+    },
+    {
+      "rule": "Repeated denied network activity",
+      "severity": "Medium",
+      "summary": "3 denied or blocked network events from 203.0.113.20.",
+      "recommendation": "Review whether the source is expected, then block, rate-limit, or investigate the host if activity is suspicious.",
+      "evidence": [
+        {
+          "timestamp": "2026-05-24T08:12:05+00:00",
+          "source_file": "sample-logs\\firewall-sample.log",
+          "raw": "2026-05-24T08:12:05Z host=EDGE01 level=warning action=deny src=203.0.113.20 dst=192.168.56.10 user=unknown message=\"Blocked inbound admin traffic\"",
+          "host": "EDGE01",
+          "user": "unknown",
+          "source_ip": "203.0.113.20",
+          "event_id": "",
+          "action": "deny",
+          "message": "2026-05-24T08:12:05Z host=EDGE01 level=warning action=deny src=203.0.113.20 dst=192.168.56.10 user=unknown message=\"Blocked inbound admin traffic\"",
+          "level": "warning",
+          "process": ""
+        },
+        {
+          "timestamp": "2026-05-24T08:12:08+00:00",
+          "source_file": "sample-logs\\firewall-sample.log",
+          "raw": "2026-05-24T08:12:08Z host=EDGE01 level=warning action=deny src=203.0.113.20 dst=192.168.56.10 user=unknown message=\"Blocked inbound admin traffic\"",
+          "host": "EDGE01",
+          "user": "unknown",
+          "source_ip": "203.0.113.20",
+          "event_id": "",
+          "action": "deny",
+          "message": "2026-05-24T08:12:08Z host=EDGE01 level=warning action=deny src=203.0.113.20 dst=192.168.56.10 user=unknown message=\"Blocked inbound admin traffic\"",
+          "level": "warning",
+          "process": ""
+        },
+        {
+          "timestamp": "2026-05-24T08:12:14+00:00",
+          "source_file": "sample-logs\\firewall-sample.log",
+          "raw": "2026-05-24T08:12:14Z host=EDGE01 level=warning action=deny src=203.0.113.20 dst=192.168.56.10 user=unknown message=\"Blocked inbound admin traffic\"",
+          "host": "EDGE01",
+          "user": "unknown",
+          "source_ip": "203.0.113.20",
+          "event_id": "",
+          "action": "deny",
+          "message": "2026-05-24T08:12:14Z host=EDGE01 level=warning action=deny src=203.0.113.20 dst=192.168.56.10 user=unknown message=\"Blocked inbound admin traffic\"",
+          "level": "warning",
+          "process": ""
+        }
+      ]
+    }
+  ]
+}

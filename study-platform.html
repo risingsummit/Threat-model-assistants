@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AI Study Platform</title>
+    <link rel="stylesheet" href="study-platform.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Adaptive learning workspace</p>
+        <h1>AI Study Platform</h1>
+      </div>
+      <div class="topbar-actions">
+        <button id="loadSample" class="ghost" type="button" title="Load sample study plan">Sample</button>
+        <button id="resetWorkspace" class="ghost danger" type="button" title="Reset workspace">Reset</button>
+        <button id="exportPlan" class="primary" type="button" title="Export study plan">Export</button>
+      </div>
+    </header>
+
+    <main class="study-shell">
+      <section class="hero-panel" aria-label="Study overview">
+        <div class="learning-visual" aria-hidden="true">
+          <canvas id="learningCanvas" width="380" height="260"></canvas>
+        </div>
+        <div class="hero-copy">
+          <p class="eyebrow">Study command center</p>
+          <h2>Convert your notes, goals, and weak spots into a focused study session.</h2>
+        </div>
+        <div class="metric-strip">
+          <div>
+            <span id="readinessScore">0</span>
+            <small>Readiness</small>
+          </div>
+          <div>
+            <span id="focusMinutes">0</span>
+            <small>Focus minutes</small>
+          </div>
+          <div>
+            <span id="quizScore">0%</span>
+            <small>Quiz score</small>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel planner-panel" aria-labelledby="planner-heading">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Learning profile</p>
+            <h2 id="planner-heading">Study setup</h2>
+          </div>
+          <span id="sessionBadge" class="badge">Manual session</span>
+        </div>
+
+        <div class="control-grid">
+          <label>
+            Subject
+            <input id="subject" type="text" value="Biology">
+          </label>
+          <label>
+            Topic
+            <input id="topic" type="text" value="Cellular respiration">
+          </label>
+          <label>
+            Exam date
+            <input id="examDate" type="date">
+          </label>
+          <label>
+            Daily minutes
+            <input id="dailyMinutes" type="number" min="15" max="240" step="5" value="60">
+          </label>
+          <label>
+            Confidence
+            <select id="confidence">
+              <option value="low">Low</option>
+              <option value="medium" selected>Medium</option>
+              <option value="high">High</option>
+            </select>
+          </label>
+          <label>
+            Study style
+            <select id="studyStyle">
+              <option value="balanced">Balanced</option>
+              <option value="visual">Visual</option>
+              <option value="practice">Practice-heavy</option>
+              <option value="reading">Reading-heavy</option>
+            </select>
+          </label>
+        </div>
+
+        <label class="notes-label">
+          Notes, syllabus, or rough ideas
+          <textarea id="notesInput" spellcheck="true"></textarea>
+        </label>
+
+        <div class="actions-row">
+          <button id="generateSession" class="primary" type="button">Generate session</button>
+          <button id="startFocus" class="secondary" type="button">Start focus</button>
+          <button id="markComplete" class="ghost" type="button">Mark complete</button>
+        </div>
+      </section>
+
+      <section class="panel coach-panel" aria-labelledby="coach-heading">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">AI coach</p>
+            <h2 id="coach-heading">Session brief</h2>
+          </div>
+          <span id="readinessBadge" class="verdict neutral">Idle</span>
+        </div>
+
+        <div class="score-card">
+          <div>
+            <span id="coachScore">0</span>
+            <small>Study readiness</small>
+          </div>
+          <div class="score-meter" aria-hidden="true">
+            <span id="scoreFill"></span>
+          </div>
+        </div>
+
+        <div id="coachBrief" class="brief-box">Generate a session to get a focused learning path, quiz, and flashcards.</div>
+      </section>
+
+      <section class="panel plan-panel" aria-labelledby="plan-heading">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Today</p>
+            <h2 id="plan-heading">Study plan</h2>
+          </div>
+          <span id="taskCount" class="badge">0 tasks</span>
+        </div>
+        <div id="taskList" class="task-list"></div>
+      </section>
+
+      <section class="panel flashcard-panel" aria-labelledby="flashcard-heading">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Recall</p>
+            <h2 id="flashcard-heading">Flashcards</h2>
+          </div>
+          <span id="flashcardCount" class="badge">0 cards</span>
+        </div>
+        <div id="flashcardStack" class="flashcard-stack"></div>
+      </section>
+
+      <section class="panel quiz-panel" aria-labelledby="quiz-heading">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Practice</p>
+            <h2 id="quiz-heading">Quick quiz</h2>
+          </div>
+          <span id="quizBadge" class="badge">0 answered</span>
+        </div>
+        <div id="quizList" class="quiz-list"></div>
+      </section>
+
+      <section class="panel insight-panel" aria-labelledby="insight-heading">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Learning signals</p>
+            <h2 id="insight-heading">Insights</h2>
+          </div>
+          <span id="insightCount" class="badge">0 insights</span>
+        </div>
+        <div id="insightStack" class="insight-stack">
+          <div class="empty-state">Weak spots and next steps will appear here.</div>
+        </div>
+      </section>
+    </main>
+
+    <template id="taskTemplate">
+      <article class="task-card">
+        <label>
+          <input type="checkbox">
+          <span></span>
+        </label>
+        <small></small>
+      </article>
+    </template>
+
+    <template id="flashcardTemplate">
+      <article class="flashcard">
+        <button type="button">
+          <strong></strong>
+          <span></span>
+        </button>
+      </article>
+    </template>
+
+    <template id="quizTemplate">
+      <article class="quiz-card">
+        <strong></strong>
+        <div></div>
+      </article>
+    </template>
+
+    <script src="study-platform.js"></script>
+  </body>
+</html>

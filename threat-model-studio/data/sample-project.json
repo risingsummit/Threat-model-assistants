@@ -1,0 +1,76 @@
+{
+  "name": "AtlasDocs Collaboration Platform",
+  "summary": "A SaaS document-sharing platform for small legal and finance teams.",
+  "deployment": "internet-facing",
+  "authModel": "password-mfa",
+  "dataSensitivity": "regulated",
+  "assets": [
+    {
+      "id": "asset-1",
+      "name": "User accounts",
+      "type": "identity",
+      "criticality": "high",
+      "controls": ["MFA", "Password policy", "Session timeout"]
+    },
+    {
+      "id": "asset-2",
+      "name": "Document storage",
+      "type": "data",
+      "criticality": "critical",
+      "controls": ["Encryption at rest", "Backups"]
+    },
+    {
+      "id": "asset-3",
+      "name": "Audit log pipeline",
+      "type": "logging",
+      "criticality": "medium",
+      "controls": ["Centralized logging"]
+    }
+  ],
+  "flows": [
+    {
+      "id": "flow-1",
+      "name": "Browser uploads document",
+      "source": "Customer browser",
+      "destination": "Public API",
+      "protocol": "HTTPS",
+      "trustBoundary": true,
+      "dataClass": "regulated",
+      "controls": ["TLS", "MFA"]
+    },
+    {
+      "id": "flow-2",
+      "name": "API stores document",
+      "source": "Public API",
+      "destination": "Document storage",
+      "protocol": "SQL/SDK",
+      "trustBoundary": false,
+      "dataClass": "regulated",
+      "controls": ["Encryption at rest"]
+    },
+    {
+      "id": "flow-3",
+      "name": "API writes audit event",
+      "source": "Public API",
+      "destination": "Audit log pipeline",
+      "protocol": "HTTPS",
+      "trustBoundary": false,
+      "dataClass": "internal",
+      "controls": ["Centralized logging"]
+    }
+  ],
+  "mitigations": [
+    {
+      "id": "mit-1",
+      "title": "Add object-level authorization tests",
+      "owner": "AppSec",
+      "status": "planned"
+    },
+    {
+      "id": "mit-2",
+      "title": "Enable immutable audit log retention",
+      "owner": "Platform",
+      "status": "in-progress"
+    }
+  ]
+}

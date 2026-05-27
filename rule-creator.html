@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Custom Security Rule Creator</title>
+    <link rel="stylesheet" href="rule-creator.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Threat model assistant</p>
+        <h1>Custom Security Rule Creator</h1>
+      </div>
+      <div class="topbar-actions">
+        <button id="loadSample" class="ghost" type="button">Sample</button>
+        <button id="resetRule" class="ghost danger" type="button">Reset</button>
+        <button id="exportRule" class="primary" type="button">Export</button>
+      </div>
+    </header>
+
+    <main class="rule-shell">
+      <section class="hero-panel" aria-label="Security rule creator overview">
+        <div class="rule-visual" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <i></i>
+        </div>
+        <div class="hero-copy">
+          <p class="eyebrow">Detection engineering lab</p>
+          <h2>Build a custom detection rule, learn what each part means, test it against sample events, and export a starter rule.</h2>
+        </div>
+        <div class="metric-strip">
+          <div>
+            <span id="matchCount">0</span>
+            <small>Matches</small>
+          </div>
+          <div>
+            <span id="conditionCount">0</span>
+            <small>Conditions</small>
+          </div>
+          <div>
+            <span id="qualityScore">0</span>
+            <small>Quality</small>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel builder-panel" aria-labelledby="builder-heading">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Rule builder</p>
+            <h2 id="builder-heading">What should trigger?</h2>
+          </div>
+          <span id="ruleBadge" class="badge">Draft rule</span>
+        </div>
+
+        <div class="control-grid">
+          <label>
+            Rule name
+            <input id="ruleName" type="text" value="Suspicious PowerShell Download">
+          </label>
+          <label>
+            Log source
+            <select id="logSource">
+              <option value="windows">Windows Security / Sysmon</option>
+              <option value="cloud">Cloud audit logs</option>
+              <option value="identity">Identity provider</option>
+              <option value="network">Network or proxy</option>
+            </select>
+          </label>
+          <label>
+            Severity
+            <select id="severity">
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high" selected>High</option>
+              <option value="critical">Critical</option>
+            </select>
+          </label>
+          <label>
+            Logic
+            <select id="logicMode">
+              <option value="all">Match all conditions</option>
+              <option value="any">Match any condition</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="condition-editor">
+          <label>
+            Field
+            <select id="conditionField">
+              <option value="process">process</option>
+              <option value="commandLine">commandLine</option>
+              <option value="username">username</option>
+              <option value="sourceIp">sourceIp</option>
+              <option value="destinationIp">destinationIp</option>
+              <option value="eventType">eventType</option>
+              <option value="url">url</option>
+            </select>
+          </label>
+          <label>
+            Operator
+            <select id="conditionOperator">
+              <option value="contains">contains</option>
+              <option value="equals">equals</option>
+              <option value="startsWith">starts with</option>
+              <option value="endsWith">ends with</option>
+            </select>
+          </label>
+          <label>
+            Value
+            <input id="conditionValue" type="text" value="DownloadString">
+          </label>
+          <button id="addCondition" class="secondary" type="button">Add condition</button>
+        </div>
+
+        <div id="conditionList" class="condition-list"></div>
+
+        <label class="event-label">
+          Test events
+          <textarea id="eventInput" spellcheck="false"></textarea>
+        </label>
+
+        <div class="actions-row">
+          <button id="testRule" class="primary" type="button">Test rule</button>
+          <button id="loadPowerShell" class="secondary" type="button">PowerShell sample</button>
+          <button id="loadCloud" class="secondary" type="button">Cloud sample</button>
+        </div>
+      </section>
+
+      <section class="panel verdict-panel" aria-labelledby="verdict-heading">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Rule quality</p>
+            <h2 id="verdict-heading">Detection posture</h2>
+          </div>
+          <span id="qualityBadge" class="verdict neutral">Untested</span>
+        </div>
+
+        <div class="score-card">
+          <div>
+            <span id="qualityValue">0</span>
+            <small>Rule quality</small>
+          </div>
+          <div class="score-meter" aria-hidden="true">
+            <span id="scoreFill"></span>
+          </div>
+        </div>
+
+        <div id="summaryBox" class="summary-box">Add conditions and test the rule to see coverage and tuning guidance.</div>
+      </section>
+
+      <section class="panel learning-panel" aria-labelledby="learning-heading">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Learn the model</p>
+            <h2 id="learning-heading">A rule has four parts</h2>
+          </div>
+        </div>
+        <div class="learning-steps">
+          <article>
+            <span>1</span>
+            <strong>Source</strong>
+            <p>Where the event comes from, like Windows, cloud audit, identity, or network logs.</p>
+          </article>
+          <article>
+            <span>2</span>
+            <strong>Conditions</strong>
+            <p>The field checks that describe suspicious behavior, such as command line contains a risky keyword.</p>
+          </article>
+          <article>
+            <span>3</span>
+            <strong>Logic</strong>
+            <p>Whether every condition must match or just one condition is enough to alert.</p>
+          </article>
+          <article>
+            <span>4</span>
+            <strong>Tuning</strong>
+            <p>How you reduce noisy alerts with exclusions, severity, and a clear investigation path.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel matches-panel" aria-labelledby="matches-heading">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Test results</p>
+            <h2 id="matches-heading">Matched events</h2>
+          </div>
+          <span id="matchBadge" class="badge">0 matches</span>
+        </div>
+        <div id="matchList" class="match-list">
+          <div class="empty-state">Matching events will appear here.</div>
+        </div>
+      </section>
+
+      <section class="panel output-panel" aria-labelledby="output-heading">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Generated rule</p>
+            <h2 id="output-heading">Starter output</h2>
+          </div>
+          <span id="outputBadge" class="badge">Sigma-style</span>
+        </div>
+        <pre id="ruleOutput"></pre>
+      </section>
+    </main>
+
+    <template id="conditionTemplate">
+      <article class="condition-card">
+        <div>
+          <strong></strong>
+          <p></p>
+        </div>
+        <button type="button" class="ghost danger">Remove</button>
+      </article>
+    </template>
+
+    <template id="matchTemplate">
+      <article class="match-card">
+        <strong></strong>
+        <p></p>
+        <small></small>
+      </article>
+    </template>
+
+    <script src="rule-creator.js"></script>
+  </body>
+</html>

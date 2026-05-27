@@ -1,0 +1,7 @@
+SamAccountName,GivenName,Surname,Department,Title,Groups
+jsmith,Jordan,Smith,IT,Help Desk Analyst,"GG_HelpDesk;GG_IT"
+apatel,Avery,Patel,Finance,Finance Analyst,GG_Finance
+mgarcia,Morgan,Garcia,HR,HR Coordinator,GG_HR
+ckim,Casey,Kim,Security,SOC Analyst,"GG_SOC;GG_IT"
+tlee,Taylor,Lee,IT,Server Administrator,"GG_ServerAdmins;GG_IT"
+rjohnson,Riley,Johnson,Operations,Workstation Administrator,GG_WorkstationAdmins

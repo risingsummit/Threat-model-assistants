@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Automated Incident Response Agent</title>
+    <link rel="stylesheet" href="incident-response.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Threat model assistant</p>
+        <h1>Automated Incident Response Agent</h1>
+      </div>
+      <div class="topbar-actions">
+        <button id="loadSample" class="ghost" type="button">Sample</button>
+        <button id="resetAgent" class="ghost danger" type="button">Reset</button>
+        <button id="exportPlan" class="primary" type="button">Export</button>
+      </div>
+    </header>
+
+    <main class="response-shell">
+      <section class="hero-panel" aria-label="Incident response overview">
+        <div class="response-visual" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <i></i>
+        </div>
+        <div class="hero-copy">
+          <p class="eyebrow">Guided response workflow</p>
+          <h2>Turn alerts into a clear incident category, severity, containment plan, evidence checklist, and recovery path.</h2>
+        </div>
+        <div class="metric-strip">
+          <div>
+            <span id="severityScore">0</span>
+            <small>Severity</small>
+          </div>
+          <div>
+            <span id="actionCount">0</span>
+            <small>Actions</small>
+          </div>
+          <div>
+            <span id="evidenceCount">0</span>
+            <small>Evidence</small>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel intake-panel" aria-labelledby="intake-heading">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Incident intake</p>
+            <h2 id="intake-heading">What happened?</h2>
+          </div>
+          <span id="sourceBadge" class="badge">Manual case</span>
+        </div>
+
+        <div class="control-grid">
+          <label>
+            Environment
+            <select id="environmentType">
+              <option value="small-business">Small business</option>
+              <option value="home-lab">Home lab</option>
+              <option value="cloud">Cloud workload</option>
+              <option value="enterprise">Enterprise network</option>
+            </select>
+          </label>
+          <label>
+            Asset criticality
+            <select id="assetCriticality">
+              <option value="standard">Standard</option>
+              <option value="important">Important</option>
+              <option value="critical">Critical</option>
+            </select>
+          </label>
+          <label>
+            Data sensitivity
+            <select id="dataSensitivity">
+              <option value="low">Low</option>
+              <option value="internal">Internal</option>
+              <option value="regulated">Regulated</option>
+            </select>
+          </label>
+          <label>
+            Current phase
+            <select id="responsePhase">
+              <option value="triage">Triage</option>
+              <option value="containment">Containment</option>
+              <option value="eradication">Eradication</option>
+              <option value="recovery">Recovery</option>
+            </select>
+          </label>
+        </div>
+
+        <label class="case-label">
+          Incident details, alerts, or notes
+          <textarea id="incidentInput" spellcheck="true"></textarea>
+        </label>
+
+        <div class="actions-row">
+          <button id="analyzeIncident" class="primary" type="button">Analyze incident</button>
+          <button id="loadPhishing" class="secondary" type="button">Phishing sample</button>
+          <button id="loadRansomware" class="secondary" type="button">Ransomware sample</button>
+        </div>
+      </section>
+
+      <section class="panel verdict-panel" aria-labelledby="verdict-heading">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Agent decision</p>
+            <h2 id="verdict-heading">Incident posture</h2>
+          </div>
+          <span id="verdictBadge" class="verdict neutral">Idle</span>
+        </div>
+
+        <div class="score-card">
+          <div>
+            <span id="riskScore">0</span>
+            <small>Response priority</small>
+          </div>
+          <div class="score-meter" aria-hidden="true">
+            <span id="scoreFill"></span>
+          </div>
+        </div>
+
+        <div id="summaryBox" class="summary-box">Add incident notes to receive a guided response plan.</div>
+      </section>
+
+      <section class="panel learning-panel" aria-labelledby="learning-heading">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Learn the workflow</p>
+            <h2 id="learning-heading">Response loop</h2>
+          </div>
+        </div>
+        <div class="learning-steps">
+          <article>
+            <span>1</span>
+            <strong>Triage</strong>
+            <p>Decide what type of incident this is and how urgent it appears.</p>
+          </article>
+          <article>
+            <span>2</span>
+            <strong>Contain</strong>
+            <p>Stop the spread while preserving evidence and business context.</p>
+          </article>
+          <article>
+            <span>3</span>
+            <strong>Recover</strong>
+            <p>Remove the root cause, restore safely, and document lessons learned.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel signals-panel" aria-labelledby="signals-heading">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Reasoning</p>
+            <h2 id="signals-heading">Matched signals</h2>
+          </div>
+          <span id="signalCount" class="badge">0 signals</span>
+        </div>
+        <div id="signalList" class="signal-list">
+          <div class="empty-state">Incident signals will appear here.</div>
+        </div>
+      </section>
+
+      <section class="panel playbook-panel" aria-labelledby="playbook-heading">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Playbook</p>
+            <h2 id="playbook-heading">Recommended actions</h2>
+          </div>
+          <span id="playbookBadge" class="badge">0 steps</span>
+        </div>
+        <div id="playbookList" class="playbook-list">
+          <div class="empty-state">Response actions will appear here.</div>
+        </div>
+      </section>
+
+      <section class="panel evidence-panel" aria-labelledby="evidence-heading">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Evidence</p>
+            <h2 id="evidence-heading">Preserve before changing</h2>
+          </div>
+          <span id="evidenceBadge" class="badge">0 items</span>
+        </div>
+        <div id="evidenceList" class="evidence-list">
+          <div class="empty-state">Evidence reminders will appear here.</div>
+        </div>
+      </section>
+    </main>
+
+    <template id="signalTemplate">
+      <article class="signal-card">
+        <strong></strong>
+        <p></p>
+        <small></small>
+      </article>
+    </template>
+
+    <template id="stepTemplate">
+      <article class="step-card">
+        <span></span>
+        <div>
+          <strong></strong>
+          <p></p>
+        </div>
+      </article>
+    </template>
+
+    <script src="incident-response.js"></script>
+  </body>
+</html>
