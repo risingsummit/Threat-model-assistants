@@ -18,6 +18,8 @@ Open `study-platform.html` in a browser for the AI Study Platform.
 
 Open `threat-model-studio/index.html` in a browser for Threat Model Studio, a GitHub-ready STRIDE threat modeling portfolio project.
 
+Use `vulnerability-assessment-patch-management` for a vulnerability assessment and patch management lab with a local vulnerable web app, PowerShell scanner, optional DVWA/Nmap/Nessus workflow guidance, scan evidence storage, and a remediation report template.
+
 ## Threat Model Studio
 
 `threat-model-studio` is a polished software engineering showcase project. It turns a product profile, assets, data flows, and mitigation tasks into a prioritized STRIDE threat model with residual risk scoring and Markdown export.

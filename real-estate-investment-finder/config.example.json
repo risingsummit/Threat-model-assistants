@@ -1,0 +1,24 @@
+{
+  "zip_codes": ["20001", "20002", "20003"],
+  "request_delay_seconds": 2.0,
+  "sources": [
+    {
+      "name": "approved-listing-feed",
+      "enabled": false,
+      "url_template": "https://example.com/properties?zip={zip_code}",
+      "card_selector": ".property-card",
+      "fields": {
+        "listing_id": {"selector": "[data-listing-id]", "attribute": "data-listing-id"},
+        "address": {"selector": ".address"},
+        "price": {"selector": ".price"},
+        "beds": {"selector": ".beds"},
+        "baths": {"selector": ".baths"},
+        "sqft": {"selector": ".sqft"},
+        "description": {"selector": ".description"},
+        "listed_date": {"selector": "time", "attribute": "datetime"},
+        "url": {"selector": "a", "attribute": "href"}
+      }
+    }
+  ]
+}
+

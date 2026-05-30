@@ -1,0 +1,20 @@
+{
+  "rows":9994,
+  "orders":5009,
+  "customers":793,
+  "date_min":"2015-01-03",
+  "date_max":"2018-12-30",
+  "sales":2297200.8599999999,
+  "profit":286397.02,
+  "quantity":37873,
+  "avg_discount":0.1562,
+  "margin":0.1247,
+  "source":"Sample Superstore retail sales dataset",
+  "cleaning":[
+    "Standardized column names for BI compatibility.",
+    "Parsed order and ship dates.",
+    "Converted sales, profit, discount, quantity, and postal code fields.",
+    "Dropped duplicate rows and records missing required KPI fields.",
+    "Added ship_days, margin, year, month, and year_month fields."
+  ]
+}

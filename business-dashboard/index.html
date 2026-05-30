@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Interactive Business Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css" />
+  </head>
+  <body>
+    <main class="dashboard-shell">
+      <header class="dashboard-header">
+        <div>
+          <p class="eyebrow">Superstore Sales Intelligence</p>
+          <h1>Interactive Business Dashboard</h1>
+          <p class="subtitle">Revenue, profit, margin, product, and regional performance from cleaned corporate sales data.</p>
+        </div>
+        <div class="header-actions">
+          <a class="download-link" href="data/superstore_clean.csv" download>Download Clean CSV</a>
+          <button id="resetFilters" class="ghost-button" type="button">Reset</button>
+        </div>
+      </header>
+
+      <section class="filter-band" aria-label="Dashboard filters">
+        <label>
+          <span>Year</span>
+          <select id="yearFilter"></select>
+        </label>
+        <label>
+          <span>Region</span>
+          <select id="regionFilter"></select>
+        </label>
+        <label>
+          <span>Segment</span>
+          <select id="segmentFilter"></select>
+        </label>
+        <label>
+          <span>Category</span>
+          <select id="categoryFilter"></select>
+        </label>
+      </section>
+
+      <section class="kpi-grid" aria-label="Key performance indicators">
+        <article class="kpi-card">
+          <span>Total Sales</span>
+          <strong id="salesKpi">$0</strong>
+          <small id="salesSpark"></small>
+        </article>
+        <article class="kpi-card">
+          <span>Total Profit</span>
+          <strong id="profitKpi">$0</strong>
+          <small id="profitSpark"></small>
+        </article>
+        <article class="kpi-card">
+          <span>Profit Margin</span>
+          <strong id="marginKpi">0%</strong>
+          <small id="discountSpark"></small>
+        </article>
+        <article class="kpi-card">
+          <span>Orders</span>
+          <strong id="ordersKpi">0</strong>
+          <small id="customersSpark"></small>
+        </article>
+      </section>
+
+      <section class="main-grid">
+        <article class="panel panel-wide">
+          <div class="panel-heading">
+            <div>
+              <h2>Sales and Profit Trend</h2>
+              <p>Monthly view of revenue and profitability.</p>
+            </div>
+            <div class="legend">
+              <span><i class="legend-sales"></i>Sales</span>
+              <span><i class="legend-profit"></i>Profit</span>
+            </div>
+          </div>
+          <div id="trendChart" class="chart chart-large" role="img" aria-label="Monthly sales and profit trend"></div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-heading">
+            <div>
+              <h2>Region Performance</h2>
+              <p>Sales and margin by territory.</p>
+            </div>
+          </div>
+          <div id="regionChart" class="chart" role="img" aria-label="Regional sales bars"></div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-heading">
+            <div>
+              <h2>Category Mix</h2>
+              <p>Share of sales and profit by product group.</p>
+            </div>
+          </div>
+          <div id="categoryChart" class="chart" role="img" aria-label="Category comparison bars"></div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-heading">
+            <div>
+              <h2>Discount vs Profit</h2>
+              <p>Each dot is a sub-category.</p>
+            </div>
+          </div>
+          <div id="scatterChart" class="chart" role="img" aria-label="Discount and profit scatter plot"></div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-heading">
+            <div>
+              <h2>Top Products</h2>
+              <p>Highest sales products in the current view.</p>
+            </div>
+          </div>
+          <div id="topProducts" class="rank-list"></div>
+        </article>
+
+        <article class="panel panel-wide">
+          <div class="panel-heading">
+            <div>
+              <h2>State Leaderboard</h2>
+              <p>Sorted by sales with profit and margin context.</p>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>State</th>
+                  <th>Sales</th>
+                  <th>Profit</th>
+                  <th>Margin</th>
+                  <th>Orders</th>
+                </tr>
+              </thead>
+              <tbody id="stateTable"></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <script src="data/superstore_clean.js"></script>
+    <script src="dashboard.js"></script>
+  </body>
+</html>
